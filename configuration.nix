@@ -1,18 +1,6 @@
 { self, pkgs, config, ... }:
 {
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      ghostty = prev.ghostty.overrideAttrs (old: {
-        src = prev.fetchFromGithub {
-          owner = "ghostty-org";
-          repo = "ghostty";
-          rev = "3f7c3afaf947280bd2852626ff4599c02d9fb07e";
-          sha256 = "";
-        };
-      });
-    })
-  ];
 
   # Set system-wide fonts.
   fonts.packages = with pkgs; [

@@ -12,7 +12,7 @@ let
         $vars | from nuon | load-env
         $env.__HM_SESS_VARS_SOURCED = true
       }
-  '';
+    '';
   };
 in
 {

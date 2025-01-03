@@ -12,8 +12,6 @@ outputs/
 result-*
 result
 repl-result-*
-tags
-.version-suffix
 .direnv
 .envrc
 
