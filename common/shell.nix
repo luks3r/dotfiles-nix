@@ -10,10 +10,7 @@
     LIBRARY_PATH = ''${pkgs.lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
   };
 
-  # Extra directories to add to $PATH
-  # https://nix-community.github.io/home-manager/options.html#opt-home.sessionPath
   home.sessionPath = [
-    # home-manager per-user profile
     # This is supposed to be set automatically by the home-manager.useUserPackages flag
     # However, it doesn't seem to be working for me
     # Therefore, I'm adding it manually
