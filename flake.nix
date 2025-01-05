@@ -52,7 +52,7 @@
 
             src = prev.fetchurl {
               url = "https://github.com/ghostty-org/ghostty/releases/download/${version}/ghostty-macos-universal.zip";
-              hash = "sha256-zdqTUP9/DPmfcrDQhS/XtjIyEsIMkM5fBC6hSDbAZsE=";
+              hash = "sha256-EWylqOKHEq6meyXmOpBUUmbtfOvnmaQlj/rd2Vvqyk8=";
             };
 
             buildInputs = [ prev.unzip ];
@@ -80,6 +80,7 @@
               homepage = "https://ghostty.org/";
               license = licenses.mit;
               platforms = platforms.darwin;
+              mainProgram = "ghostty";
             };
           };
         })
