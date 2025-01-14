@@ -3,10 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -36,7 +32,7 @@
 
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nur, home-manager, mac-app-util, bash-env-json, bash-env-nushell }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, mac-app-util, bash-env-json, bash-env-nushell }:
     let
       system = "aarch64-darwin";
       apple-silicon = { pkgs, config, ... }: {
@@ -44,25 +40,20 @@
       };
 
       overlays = [
-        nur.overlays.default
         (final: prev: {
           ghostty-darwin = prev.stdenv.mkDerivation rec {
             pname = "Ghostty";
             version = "tip";
 
-            src = prev.fetchurl {
-              url = "https://github.com/ghostty-org/ghostty/releases/download/${version}/ghostty-macos-universal.zip";
-              hash = "sha256-EWylqOKHEq6meyXmOpBUUmbtfOvnmaQlj/rd2Vvqyk8=";
-            };
-
-            buildInputs = [ prev.unzip ];
+            buildInputs = [ prev.unzip prev.wget ];
             sourceRoot = ".";
 
             phases = [ "unpackPhase" "installPhase" ];
 
             unpackPhase = ''
               runHook preUnpack
-              unzip $src -d "$sourceRoot"
+              wget -O ghostty.zip "https://github.com/ghostty-org/ghostty/releases/download/${version}/ghostty-macos-universal.zip" --verbose --no-check-certificate
+              unzip ghostty.zip -d "$sourceRoot"
               runHook postUnpack
             '';
 
@@ -98,14 +89,12 @@
       };
     in
     {
-      nixpkgs.overlays = overlays;
       darwinConfigurations.LukserPro = nix-darwin.lib.darwinSystem {
         modules = [
           apple-silicon
           ./configuration.nix
           home-manager.darwinModules.home-manager
           {
-            nixpkgs.overlays = overlays;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.lukser.imports = [

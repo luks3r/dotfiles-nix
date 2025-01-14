@@ -46,6 +46,7 @@
     "obs"
     "satrik/togglemute/togglemute"
     "karabiner-elements"
+    "jordanbaird-ice"
   ];
 
   homebrew.masApps = {

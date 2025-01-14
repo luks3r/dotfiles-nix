@@ -11,7 +11,7 @@
       settings = {
         window-theme = "dark";
         theme = "catppuccin-mocha";
-        macos-option-as-alt = true;
+        macos-option-as-alt = false;
 
         font-size = 11;
         font-family = "JetBrainsMono Nerd Font";
